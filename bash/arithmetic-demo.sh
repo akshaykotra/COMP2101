@@ -19,14 +19,14 @@ dividend=$((firstnum / secondnum))
 substraction=$((firstnum - secondnum))
 multiplication=$((firstnum * secondnum))
 modulus=$((firstnum % secondnum))
-$power=$((firstnum ** secondnum))
+power=$((firstnum ** secondnum))
 fpdividend=$(awk "BEGIN{printf \"%.2f\", $firstnum/$secondnum}")
 
 cat <<EOF
 $firstnum plus $secondnum is $sum
 $firstnum substracted by $secondnum is $substraction
 $firstnum multiplicated by $secondnum is $multiplication
-$firstnum divided by $secondnum is $dividend
 $firstnum power of $secondnum is $power
+$firstnum divided by $secondnum is $dividend
   - More precisely, it is $fpdividend with a remainder of $modulus
 EOF
