@@ -35,7 +35,7 @@
 #cat <<EOF
 Hostname=$(hostname)
 LANAddress=$(ip a s $(ip a |awk '/: e/{gsub(/:/,"");print $2}')|awk '/inet /{gsub(/\/.*/,"");print $2}')
-LANHostname=$(getent hosts $(ip a s $(ip a |awk '/: e/{gsub(/:/,"");print $2}'))|awk '/inet /{gsub(/\/.*/,"");print $2}' | awk '{print $2}')
+LANHostname=$(ip a |awk '/: e/{gsub(/:/,"");print $2}')
 ExternalIP=$(curl -s icanhazip.com)
 ExternalName=$(getent hosts $(curl -s icanhazip.com) | awk '{print $2}')
 RouterAddress=$(ip route show | grep -i 'default via'| awk '{print $3 }')
@@ -49,9 +49,9 @@ Hostname      :$Hostname
 LAN Address   :$LANAddress
 LAN Hostname  :$LANHostname
 External IP   :$ExternalIP
-ExternalName  :$ExternalName
-RouterAddress :$RouterAddress
-RouterName    :$RouterName
-NetworkAddress:$NetworkAddress
-NetworkName   :$NetworkName
+External Name  :$ExternalName
+Router Address :$RouterAddress
+Router Name    :$RouterName
+Network Address:$NetworkAddress
+Network Name   :$NetworkName
 EOF
