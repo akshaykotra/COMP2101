@@ -6,21 +6,21 @@
 # TASK 3: Improve it by giving them 3 tries to get it right before failing (test 3 times but only if necessary)
 #           *** Do not use the exit command
 
-myString="TestString"
+myString="akshay"
 #referenceString="password"
 #[ $myString = $referenceString ] && echo "You guessed the password!" || echo "The password eludes you..."
-totalTries=3
+totalTries=1
 echo "Please guess the password"
-while [ $totalTries -ge 1 ] && [ $totalTries -le 3 ]
+while [ $totalTries -gt 0 ] && [ $totalTries -le 3 ]
 do
 read password
 if [ $myString = $password ]
 then
-  echo "you have guessed the correct password."
+  echo "you have guessed the correct password and choice number is $totalTries."
 break
 elif [ $myString != $password ]
 then
   echo "password incorrect please try again."
 fi
-totalTries=$[$totalTries -1]
+totalTries=$[$totalTries +1]
 done
