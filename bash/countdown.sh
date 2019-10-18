@@ -9,19 +9,33 @@
 
 # Task: Explain in a comment how the line with the word moose in it works.
 
+trap StartAgain SIGINT
+trap Surprise SIGQUIT
+
 #### Variables
 programName="$(basename $0)" # used by error_functions.sh
 sleepTime=1 # delay used by sleeptime
 numberOfSleeps=10 # how many sleeps to wait for before quitting for inactivity
 
 #### Functions
+function StartAgain {
+  echo "you can not interrupt the count"
+  sleepCount=$numberOfSleeps+1
+}
+
+function Surprise {
+  echo "you found secret for quiting the loop"
+  exit
+}
 
 # This function will send an error message to stderr
 # Usage:
 #   error-message ["some text to print to stderr"]
 #
-#
 function error-message {
+
+        #here it will print out the programname with first command line argument and moose printing statment
+        #after that >&2 will send the output of echo to standard error instead of standard output.D
         echo "${programName}: ${1:-Unknown Error - a moose bit my sister once...}" >&2
 }
 
@@ -33,6 +47,7 @@ function error-exit {
         error-message "$1"
         exit "${2:-1}"
 }
+
 function usage {
         cat <<EOF
 Usage: ${programName} [-h|--help ] [-w|--waittime waittime] [-n|--waitcount waitcount]
@@ -40,20 +55,6 @@ Default waittime is 1, waitcount is 10
 EOF
 }
 
-####
-function signals {
-if trap no_ctrlc SIGINT ;
-then
-echo "you are not allowed to intterupt in between"
-sleepCount=$numberOfSleeps+1
-elif trap "" SIGTSTP ;
-then
-  echo "You found the secret to getting out of script"
-  QUIT
-fi
-}
-
-###
 #### Main Program
 
 # Process command line parameters
@@ -92,7 +93,5 @@ while [ $sleepCount -gt 0 ]; do
     echo "Waiting $sleepCount more times for signals"
     sleep $sleepTime
     sleepCount=$((sleepCount - 1))
-    trap signals INT
-    trap signals QUIT
 done
 echo "Wait counter expired, exiting peacefully"
